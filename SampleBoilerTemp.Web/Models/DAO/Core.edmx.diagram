@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6e7751bc37c442ca99d954a210fb8b9d" Name="Diagram1">
+        <EntityTypeShape EntityType="DefaultModel.C__MigrationHistory" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpAuditLog" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpBackgroundJob" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpEdition" Width="1.5" PointX="5.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpFeature" Width="1.5" PointX="8" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpLanguage" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpLanguageText" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpNotification" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpNotificationSubscription" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpOrganizationUnit" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpPermission" Width="1.5" PointX="5.25" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpRole" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpSetting" Width="1.5" PointX="3" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpTenantNotification" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpTenant" Width="1.5" PointX="8" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpUserAccount" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpUserClaim" Width="1.5" PointX="3" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpUserLoginAttempt" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpUserLogin" Width="1.5" PointX="3" PointY="29.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpUserNotification" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpUserOrganizationUnit" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpUserRole" Width="1.5" PointX="3" PointY="32.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpUser" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.ClientDetail" Width="1.5" PointX="10.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.RequesterDetail" Width="1.5" PointX="12.5" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.SMS_Particulars" Width="1.5" PointX="13.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.SMS_Units" Width="1.5" PointX="13.25" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.StationaryRequest" Width="1.5" PointX="10.25" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.StationaryRequestDetail" Width="1.5" PointX="15.5" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.Status" Width="1.5" PointX="8" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpFeatures_dbo_AbpEditions_EditionId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpTenants_dbo_AbpEditions_EditionId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpOrganizationUnits_dbo_AbpOrganizationUnits_ParentId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpPermissions_dbo_AbpRoles_RoleId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpPermissions_dbo_AbpUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpRoles_dbo_AbpUsers_CreatorUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpRoles_dbo_AbpUsers_DeleterUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpRoles_dbo_AbpUsers_LastModifierUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpSettings_dbo_AbpUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_AbpTenant_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpTenants_dbo_AbpUsers_CreatorUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpTenants_dbo_AbpUsers_DeleterUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpTenants_dbo_AbpUsers_LastModifierUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpUserClaims_dbo_AbpUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpUserLogins_dbo_AbpUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpUserRoles_dbo_AbpUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_AbpUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpUsers_dbo_AbpUsers_CreatorUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpUsers_dbo_AbpUsers_DeleterUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_dbo_AbpUsers_dbo_AbpUsers_LastModifierUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_Client_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_Request_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_Particulars_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_Unit_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_Request_DetailsId" ManuallyRouted="false" />
+        <AssociationConnector Association="DefaultModel.FK_Status_Id" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DefaultModel.SMS_Particular_Unit" Width="1.5" PointX="15.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

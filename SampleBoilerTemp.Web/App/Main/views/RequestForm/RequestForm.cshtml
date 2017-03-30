@@ -1,0 +1,193 @@
+﻿
+<div ng-controller="app.views.RequestForm as vm">
+    <div class="divList">
+
+        <div class="table-hover">
+            <ul class="table_list_userdetails">
+                <li>
+                    <span>From: {{From}}</span>
+
+
+                </li>
+                <li>
+                    <span>Date: {{Date | date: 'dd-MMMM-yy'}} </span>
+                </li>
+
+                <li>
+                    <span>Month: {{Month}} </span>
+                </li>
+                <li>
+                    <span>Phone: {{Phone}} </span>
+                </li>
+                <li>
+                    <span>Wing: {{Wing}} </span>
+                </li>
+            </ul>
+
+        </div>
+
+        <div style="background: #f5f5f5;
+    padding: 15px;
+    margin: 16px 0 0 0;
+    border: 1px solid #dadada;
+    border-radius: 4px;
+}">
+            <span ng-click="AddRequest()" class="btn btn-default">
+                Add Details
+            </span>
+            <span ng-click="DeleteRequest()" class="btn btn-default">
+                Remove Details
+            </span>
+            <span ng-click="SubmitRequestDiv()" class="btn btn-default">Submit </span>
+
+            <div class="table_scroll">
+            <table class="table table-hover">
+                <tr style="background:rgba(0, 114, 255, 0.12)">
+
+                    <td><b>Particulars</b></td>
+                    <td><b>Unit</b></td>
+                    <td><b>Quantity</b></td>
+                    <td><b>Rate</b></td>
+                    <td><b>Vat</b></td>
+                    <td><b>VateRate</b></td>
+                    <td><b>FinalRate</b></td>
+                    <td><b>Cost</b></td>
+                    <td><b>Delete</b></td>
+                </tr>
+
+                <tr ng-repeat="request in requests">
+
+                    <td>
+
+
+                        <span ng-show="showEdit">{{request.ParticularDesc}}</span>
+                        <select ng-show="!showEdit" ng-options="particalar.Item_Description as particalar.Item_Description for particalar in particulars track by particalar.Item_Description" ng-model="request.ParticularDesc" ng-change="GetRatedetails(request)" ></select>
+
+
+                    </td>
+                    <td>
+                        <span ng-show="showEdit">{{request.UnitDesc}}</span>
+
+                        <select ng-show="!showEdit" ng-options="unit.Unit_Description as unit.Unit_Description for unit in units track by unit.Unit_Id" ng-model="request.UnitDesc" ng-change="GetRatedetails(request)"></select>
+                    </td>
+                    <td>
+                        <span ng-show="showEdit">{{request.Quantity}}</span>
+                        <input ng-show="!showEdit" type="text" ng-model="request.Quantity" ng-keyup="FinalCost(request)" class="form-control">
+
+                    </td>
+                    <td>
+                        <span ng-show="showEdit">{{request.Rate}}</span>
+                        <input ng-show="!showEdit" type="text" ng-model="request.Rate" class="form-control">
+
+                    </td>
+                    <td>
+                        <span ng-show="showEdit">{{request.Vat}}</span>
+                        <input ng-show="!showEdit" type="text" ng-model="request.Vat" class="form-control">
+
+                    </td>
+                    <td>
+                        <span ng-show="showEdit">{{request.VateRate}}</span>
+                        <input ng-show="!showEdit" type="text" ng-model="request.VateRate" class="form-control">
+
+                    </td>
+
+                    <td>
+                        <span ng-show="showEdit">{{request.FinalRate}}</span>
+                        <input ng-show="!showEdit" type="text" ng-model="request.FinalRate" class="form-control">
+
+                    </td>
+
+                    <td>
+                        <span ng-show="showEdit">{{request.Cost}}</span>
+                        <input ng-show="!showEdit" type="text" ng-model="request.Cost" class="form-control">
+
+                    </td>
+
+                    <td>
+
+                        <input type="hidden" ng-bind={{request.Index}}>
+                        <input type="hidden" ng-bind={{request.Id}}>
+
+                        @*<span ng-click="editRequest(request)" class="btn btn-primary" > Edit</span>*@
+                        <span ng-click="RemoveDetails(request)" class="btn btn-danger">Delete</span>
+                    </td>
+
+
+
+
+                </tr>
+
+            </table>
+            </div>
+            <span>{{Result}}</span>
+        </div>
+    </div>
+    <div class="request_note">
+        <h3>Note</h3>
+       <ul> 
+           <li>1. Stationery list should be authorised by Department/Function Head</li>
+           <li>2. The requisition has to be submitted on or before 26th of every month</li>
+           <li>3. Any requirement more then this list, need to send separate mail</li>
+           <li>4. Other then the below requirement if any kindly mention seperately</li>
+
+       </ul>
+    </div>
+    <div ng-show="divAddRequest">
+        <p class="divHead"></p>
+        @*<table class="table add_request">
+            <tr>
+                <td colspan="8"><b><i>{{Action}} Request</i></b></td>
+               
+            </tr>
+            <tr>
+                <td><b>ParticularDetails</b></td>
+                <td>
+                   
+
+                </td>
+                <td><b>Units</b></td>
+                <td>
+                   
+
+                </td>
+                <td><b>Rate</b></td>
+                <td>
+                    <input type="text" ng-model="Rate" ng-keyup="VateRateCal()" />
+                </td>
+                <td><b>Vat</b></td>
+                <td>
+                    <input type="text" ng-model="Vat" ng-keyup="VateRateCal()"  />
+                </td>
+            </tr>
+            <tr>
+              
+                <td><b>VateRate</b></td>
+                <td>
+                    <input type="text" ng-model="VateRate" />
+                </td>
+                <td><b>FinalRate</b></td>
+                <td>
+                    <input type="text" ng-model="FinalRate"   />
+                </td>
+                <td><b>Quantity</b></td>
+                <td>
+                    <input type="text" ng-model="Quantity"  ng-keyup="FinalCost()" />
+                </td>
+                <td><b>Cost</b></td>
+                <td>
+                    <input type="text" ng-model="Cost" />
+                </td>
+                
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <input type="button" class="btn btn-default" value="Save" ng-click="AddRequest()" />
+                    <input type="button" class="btn btn-danger" value="Cancel" ng-click="Cancel()" />
+                   
+                </td>
+            </tr>
+        </table>*@
+     
+    </div>
+</div>
+
