@@ -2,7 +2,7 @@
 <div ng-controller="app.views.RequestForm as vm">
     <div class="divList">
 
-        <div class="table-hover">
+        <div class="table-hover" >
             <ul class="table_list_userdetails">
                 <li>
                     <span>From: {{From}}</span>
@@ -41,7 +41,7 @@
             <span ng-click="SubmitRequestDiv()" class="btn btn-default">Submit </span>
 
             <div class="table_scroll">
-            <table class="table table-hover">
+            <table class="table table-hover" >
                 <tr style="background:rgba(0, 114, 255, 0.12)">
 
                     <td><b>Particulars</b></td>
@@ -61,14 +61,14 @@
 
 
                         <span ng-show="showEdit">{{request.ParticularDesc}}</span>
-                        <select ng-show="!showEdit" ng-options="particalar.Item_Description as particalar.Item_Description for particalar in particulars track by particalar.Item_Description" ng-model="request.ParticularDesc" ng-change="GetRatedetails(request)" ></select>
+                        <select ng-show="!showEdit" ng-options="particalar.Item_Description as particalar.Item_Description for particalar in particulars track by particalar.Item_Description"  ng-model="request.ParticularDesc" ng-change="GetRatedetails(request)" ng-selected="particalar.Item_Description" ></select>
 
 
                     </td>
                     <td>
                         <span ng-show="showEdit">{{request.UnitDesc}}</span>
 
-                        <select ng-show="!showEdit" ng-options="unit.Unit_Description as unit.Unit_Description for unit in units track by unit.Unit_Id" ng-model="request.UnitDesc" ng-change="GetRatedetails(request)"></select>
+                        <select ng-show="!showEdit" ng-options="unit.Unit_Description as unit.Unit_Description for unit in units track by unit.Unit_Id" ng-model="request.UnitDesc"  ng-change="GetRatedetails(request)"></select>
                     </td>
                     <td>
                         <span ng-show="showEdit">{{request.Quantity}}</span>

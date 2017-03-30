@@ -14,9 +14,9 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
     GetAllDetails();
     Bind();
     function BindData() {
-
+       
         $scope.requests.push($scope.emp);
-
+       
 
     }
     function  Bind()
@@ -137,6 +137,7 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
         $scope.emp = emp;
         if ($scope.Action == "Update")
             $scope.emp.Index = $scope.updateIndex;
+      
             BindData();
 
     }
@@ -145,11 +146,23 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
         if (request.ParticularDesc != null && request.UnitDesc != null) {
             var req = requestAJService.getRateDetails(request.ParticularDesc, request.UnitDesc);
             req.then(function (msg) {
-                request.Rate = msg.data[0].Rate;
-                request.Vat = msg.data[0].VAT;
-                request.VateRate = request.Vat * request.Rate / 100;
-                request.FinalRate = request.Rate + request.VateRate;
-                request.Cost = request.FinalRate * request.Quantity;
+                if (msg.data.length != 0) {
+                    request.Rate = msg.data[0].Rate;
+                    request.Vat = msg.data[0].VAT;
+                    request.VateRate = request.Vat * request.Rate / 100;
+                    request.FinalRate = request.Rate + request.VateRate;
+                    request.Cost = request.FinalRate * request.Quantity;
+                }
+                else
+                {
+
+                    request.Rate ="";
+                    request.Vat = "";
+                    request.VateRate = "";
+                    request.FinalRate = "";
+                    request.Cost = "";
+
+                }
             }, function () {
                 alert('Error in updating emp record');
             });

@@ -9,86 +9,140 @@
 {
     @Html.IncludeScript("~/Views/Account/Login.js")
 }
-<div class="container">
-    <div id="LoginArea" class="row">
-        <div class="col-lg-12">
-            <div class="well bs-component">
-                <form id="LoginForm" class="form-horizontal" action="@(Url.Action("Login", "Account"))?returnUrl=@(Model.ReturnUrl)" method="POST">
-                    <fieldset>
-                        <legend>@L("LogIn")</legend>
+<style type="text/css">
+    .well.bs-component {
+    background: rgba(0,0,0,0.3);
+    border: none;
+    text-align: center;
+}
 
-                        @if (Model.IsMultiTenancyEnabled)
-                        {
+    legend {
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    font-size: 23px;
+}
+    #LoginForm .form-group {
+    margin-bottom: 5px;
+}
+    #LoginForm .form-group input {
+        padding: 5px 13px;
+    height: auto;
+    font-size: 12px;
+    border-radius: 3px;
+    margin: 0 0 5px 0;
+}
+    span.text-muted {
+ color: #f1f1f1;
+    font-size: 11px;
+    padding: 0 0 0 0px;
+    text-align: left!important;
+    display: inherit;
+    margin: 7px 0 3px 0;
+}
+    #LoginForm .checkbox input {
+    margin: 3px 0 2px 0!important;
+}
+    .checkbox {
+    color: #fff;
+    font-size: 12px;
+    padding-left: 1px;
+     text-align: left;
+}
+    #LoginForm .btn {
+    padding: 5px 12px;
+    font-size: 12px;
+    border-radius: 21px;
+}
+    #LoginForm span.text-danger {
+    font-size: 11px;
+    text-align: left;
+    color: #fff;
+}
+</style>
+<body style="background: url('../../App/Main/images/loginimg.jpg') no-repeat center center; background-size:cover;">
+    <div class="container">
+        <div id="LoginArea" class="row">
+            <div class="col-lg-12">
+                <div class="well bs-component">
+                    <form id="LoginForm" class="form-horizontal" action="@(Url.Action("Login", "Account"))?returnUrl=@(Model.ReturnUrl)" method="POST">
+                        <fieldset>
+                            <legend>@L("LogIn")</legend>
+
+                            @if (Model.IsMultiTenancyEnabled)
+                            {
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <input type="text" value="css" class="form-control" id="TenancyName" placeholder="@L("TenancyName")" required maxlength="@SampleBoilerTemp.MultiTenancy.Tenant.MaxTenancyNameLength">
+                                        <span class="text-muted">@L("CanBeEmptyToLoginAsHost")</span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="hidden" id="TenancyName" value="">
+                            }
+
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                    <input type="text" class="form-control" id="TenancyName" placeholder="@L("TenancyName")" required maxlength="@SampleBoilerTemp.MultiTenancy.Tenant.MaxTenancyNameLength">
-                                    <span class="text-muted">@L("CanBeEmptyToLoginAsHost")</span>
+                                    <input type="text" class="form-control" id="EmailAddressInput" placeholder="@L("UserNameOrEmail")" required maxlength="@SampleBoilerTemp.Users.User.MaxEmailAddressLength">
                                 </div>
                             </div>
-                        }
-                        else
-                        {
-                            <input type="hidden" id="TenancyName" value="">
-                        }
 
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                <input type="text" class="form-control" id="EmailAddressInput" placeholder="@L("UserNameOrEmail")" required maxlength="@SampleBoilerTemp.Users.User.MaxEmailAddressLength">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                <input type="password" class="form-control" id="PasswordInput" placeholder="@L("Password")" required maxlength="@SampleBoilerTemp.Users.User.MaxPlainPasswordLength">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="RememberMeInput">
-                                        <span class="ripple"></span>
-                                        <span class="check"></span> @L("RememberMe")
-                                    </label>
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <input type="password" class="form-control" id="PasswordInput" placeholder="@L("Password")" required maxlength="@SampleBoilerTemp.Users.User.MaxPlainPasswordLength">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="RememberMeInput">
+                                            <span class="ripple"></span>
+                                            <span class="check"></span> @L("RememberMe")
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <input id="ReturnUrlHash" type="hidden" name="returnUrlHash" />
+                            <input id="ReturnUrlHash" type="hidden" name="returnUrlHash" />
 
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                <button id="LoginButton" type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> @L("LogIn")</button>
-                                <a class="btn btn-success" href="@Url.Action("Register")"><i class="fa fa-sign-in"></i> @L("Register")</a>
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <button id="LoginButton" type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> @L("LogIn")</button>
+                                    <a class="btn btn-success" href="@Url.Action("Register")"><i class="fa fa-sign-in"></i> @L("Register")</a>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
-                </form>
+                        </fieldset>
+                    </form>
 
-                @{
-                    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList();
-                }
+                    @{
+                        var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList();
+                    }
 
-                @if (loginProviders.Count > 0)
-                {
-                    <p>@L("OrLoginWith"):</p>
-                    
-
-                    using (Html.BeginForm("ExternalLogin", "Account", method: FormMethod.Post))
+                    @if (loginProviders.Count > 0)
                     {
-                        @Html.AntiForgeryToken()
+                        <p>@L("OrLoginWith"):</p>
 
-                        <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
-                        <input type="hidden" name="provider" value="" />
 
-                        foreach (var provider in loginProviders)
+                        using (Html.BeginForm("ExternalLogin", "Account", method: FormMethod.Post))
                         {
-                            <a class="btn btn-default btn-sm social-login-link" title="@provider.AuthenticationType"
-                               data-provider="@provider.AuthenticationType"
-                               href="javascript:;">
-                                <i class="fa fa-@(provider.AuthenticationType.ToLower())"></i> @provider.AuthenticationType
-                            </a>
+                            @Html.AntiForgeryToken()
+
+                            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+                            <input type="hidden" name="provider" value="" />
+
+                            foreach (var provider in loginProviders)
+                            {
+                                <a class="btn btn-default btn-sm social-login-link" title="@provider.AuthenticationType"
+                                   data-provider="@provider.AuthenticationType"
+                                   href="javascript:;">
+                                    <i class="fa fa-@(provider.AuthenticationType.ToLower())"></i> @provider.AuthenticationType
+                                </a>
+                            }
                         }
                     }
-                }
 
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>

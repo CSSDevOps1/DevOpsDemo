@@ -42,7 +42,7 @@ namespace SampleBoilerTemp.Web.App_Start
         {
             var requestdetails = from req in smsEntity.StationaryRequestDetails join  part in smsEntity.SMS_Particulars on req.ParticularId equals part.Item_id join 
                                 unit in smsEntity.SMS_Units on req.UnitId equals unit.Unit_Id join reqst in smsEntity.StationaryRequests on req.RequestId equals reqst.RequestId  where req.RequestId == requestId 
-                                 select new {part.Item_Description,req.Quantity,req.Rate,req.Id,req.VateRate,unit.Unit_Description,req.Cost,reqst.TenantId,reqst.UserId,req.RequestId };
+                                 select new {part.Item_Description,req.Quantity,req.Rate,req.Id,req.VateRate,req.FinalRate,req.Vat,unit.Unit_Description,req.Cost,reqst.TenantId,reqst.UserId,req.RequestId };
             return Json(requestdetails.ToList(), JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetRateDetails(string particular,string unit)
