@@ -59,9 +59,11 @@ namespace SampleBoilerTemp.Web.App_Start
         {
             return "";
         }
-        public string PostStationaryRequestDetails(List<Stationary_Request> stRequest)
+        public string PostStationaryRequestDetails(int? requestId, List<Stationary_Request> stRequest, List<Stationary_Request> stRequest1)
         {
-            if (stRequest[0].RequestId == null)
+
+           
+            if (requestId == null)
             {
                 long userid = stRequest[0].UserId;
                 int? tenantid = stRequest[0].TenantId;
@@ -91,14 +93,13 @@ namespace SampleBoilerTemp.Web.App_Start
 
                 foreach (Stationary_Request obj in stRequest)
                 {
-                    if (obj.ParticularDesc != null && obj.UnitDesc != null)
-                    {
+                  
                         //var particularId = (from part in smsEntity.SMS_Particulars where part.Item_Description == obj.ParticularDesc select part.Item_id).FirstOrDefault();
                         //var UnitId = (from unit in smsEntity.SMS_Units where unit.Unit_Description == obj.UnitDesc select unit.Unit_Id).FirstOrDefault();
                         StationaryRequestDetail stationaryRequestDetail = new StationaryRequestDetail();
-                        stationaryRequestDetail.ParticularId = obj.ParticularId;
+                        stationaryRequestDetail.ParticularId = obj.Item_id;
                         stationaryRequestDetail.RequestId = reqIds;
-                        stationaryRequestDetail.UnitId = obj.UnitId;
+                        stationaryRequestDetail.UnitId = obj.Unit_Id;
                         stationaryRequestDetail.Rate = obj.Rate;
                         stationaryRequestDetail.Vat = obj.Vat;
                         stationaryRequestDetail.VateRate = obj.VateRate;
@@ -107,7 +108,7 @@ namespace SampleBoilerTemp.Web.App_Start
                         stationaryRequestDetail.Cost = obj.Cost;
                         smsEntity.StationaryRequestDetails.Add(stationaryRequestDetail);
                         smsEntity.SaveChanges();
-                    }
+                    
 
                 }
             }

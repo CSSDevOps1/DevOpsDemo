@@ -9,10 +9,10 @@ namespace SampleBoilerTemp.Web.Models.Account
     {
         public long UserId { get; set; }
         public Nullable<int> TenantId { get; set; }
-        public long Id { get; set; }
+        public string Id { get; set; }
         public Nullable<int> RequestId { get; set; }
-        public Nullable<short> ParticularId { get; set; }
-        public Nullable<short> UnitId { get; set; }
+        public Nullable<short> Item_id { get; set; }
+        public Nullable<short> Unit_Id { get; set; }
         public Nullable<decimal> Rate { get; set; }
         public Nullable<decimal> Vat { get; set; }
         public Nullable<decimal> VateRate { get; set; }

@@ -7,7 +7,7 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
     $scope.From = appSession.user.name;
     var today = new Date();
     var date = today.getDate() + "-" + today.toLocaleString("en-us", { month: "long" }) + "-" + today.getFullYear();
-  
+    var qs = $location.search();
     $scope.Date = today;
     $scope.Month = today.toLocaleString("en-us", { month: "long" });;
     $scope.Wing = appSession.tenant.name;
@@ -44,12 +44,13 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
     {
         GetParticulars();
         GetUnits();
-        var qs = $location.search();
+      
         if (qs.id != null) {
             var getParticularData = requestAJService.getDetails(qs.id);
             getParticularData.success(function (particular) {
             var particularitems = {};
-                for (var i = 0; i < particular.length; i++) {
+            for (var i = 0; i < particular.length; i++) {
+                    particularitems.Id = particular[i].Id;
                     particularitems.Item_id = particular[i].Item_id;
                     particularitems.Unit_Id = particular[i].Unit_Id;
                     particularitems.Quantity=particular[i].Quantity;
@@ -58,6 +59,9 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
                     particularitems.VateRate=particular[i].VateRate;
                     particularitems.FinalRate=particular[i].FinalRate;
                     particularitems.Cost = particular[i].Cost;
+                    particularitems.RequestId = particular[i].RequestId;
+                    particularitems.TenantId = particular[i].TenantId;
+                    particularitems.UserId = particular[i].UserId;
                     $scope.requests.push(particularitems);
                 }
 
@@ -96,7 +100,7 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
 
         $scope.showEdit = true;
 
-        var req = requestAJService.addRequest($scope.requests, appSession.tenant.id, appSession.user.id);
+        var req = requestAJService.addRequest($scope.requests, appSession.tenant.id, appSession.user.id,qs);
         req.then(function (msg) {
             $window.location.href = '#/test';
 
@@ -111,11 +115,16 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
     $scope.AddRequest = function () {
         $scope.showEdit =  false;
         var index = 0;
-        if ($scope.requests.length != 0)
-             index = $scope.requests.length;
+        if ($scope.requests.length != 0) {
+            index = "A" + $scope.requests.length;
+        }
+        else
+        {
+            index = "A" + 0;
+}
            
         var emp = {
-            Index: index,
+            Id: index,
            
             UserId: appSession.user.id,
             TenantId: appSession.tenant.id
@@ -263,16 +272,20 @@ app.service("requestAJService", function ($http, $q) {
     }
 
 
-    this.addRequest = function (emp, tenant, user) {
+    this.addRequest = function (emp, tenant, user,qs) {
         emp.tenant = tenant;
         var response = $http({
-            method: "post",
+            method: "put",
             //url: "Employee/AddEmployee",
             url: "RequestForm/PostStationaryRequestDetails",
-           data: JSON.stringify(emp),
-            //params: {
-            //    stRequest:1
-            //}
+            data: JSON.stringify(emp),
+            data:JSON.stringify(emp),
+            params: {
+               
+                requestId: qs.id
+
+    }
+           
             
         }); 
         return response;
