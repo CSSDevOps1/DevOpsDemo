@@ -4,7 +4,7 @@
     <text name="HomePage" value="Home page" />
 
     <text name="About" value="Chi siamo" />
-    <text name="WellcomeMessage" value="Benvenuti su My New House!" />
+    <text name="WellcomeMessage" value="Benvenuti su CSS!" />
     <text name="Stationery RequestForm" value="Cancelleria RequestForm" />
     <text name="FormIsNotValidMessage" value="I dati non sono corretti. Verifica gli errori." />
     <text name="TenantNameCanNotBeEmpty" value="Il Dominio non può essere vuoto" />

@@ -20,7 +20,10 @@
                     <span>Phone: {{Phone}} </span>
                 </li>
                 <li>
-                    <span>Wing: {{Wing}} </span>
+                    <span>Project: {{Wing}} </span>
+                </li>
+                <li>
+                    <span>Place: Chennai </span>
                 </li>
             </ul>
 
@@ -60,15 +63,15 @@
                     <td>
 
 
-                        <span ng-show="showEdit">{{request.ParticularDesc}}</span>
-                        <select ng-show="!showEdit" ng-options="particalar.Item_Description as particalar.Item_Description for particalar in particulars track by particalar.Item_Description"  ng-model="request.ParticularDesc" ng-change="GetRatedetails(request)" ng-selected="particalar.Item_Description" ></select>
+                        <span ng-show="showEdit">{{request.Item_id}}</span>
+                        <select ng-show="!showEdit" ng-options="particalar.Item_id as particalar.Item_Description for particalar in particulars "  ng-model="request.Item_id" ng-change="GetRatedetails(request)"  ng-selected="particalar.Item_Description" ></select>
 
 
                     </td>
                     <td>
-                        <span ng-show="showEdit">{{request.UnitDesc}}</span>
+                        <span ng-show="showEdit">{{request.Unit_Description}}</span>
 
-                        <select ng-show="!showEdit" ng-options="unit.Unit_Description as unit.Unit_Description for unit in units track by unit.Unit_Id" ng-model="request.UnitDesc"  ng-change="GetRatedetails(request)"></select>
+                        <select ng-show="!showEdit" ng-options="unit.Unit_Id as unit.Unit_Description for unit in units " ng-model="request.Unit_Id"  ng-change="GetRatedetails(request)"></select>
                     </td>
                     <td>
                         <span ng-show="showEdit">{{request.Quantity}}</span>

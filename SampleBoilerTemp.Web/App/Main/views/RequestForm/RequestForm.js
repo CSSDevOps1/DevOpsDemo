@@ -3,45 +3,43 @@ var app = angular.module('app');
 app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJService, $window, appSession, $location) {
     $scope.requests = [];
     $scope.emp = null;
-   
+     
     $scope.From = appSession.user.name;
     var today = new Date();
     var date = today.getDate() + "-" + today.toLocaleString("en-us", { month: "long" }) + "-" + today.getFullYear();
-    //var month = today.toLocaleString("en-us", { month: "long" });
+  
     $scope.Date = today;
     $scope.Month = today.toLocaleString("en-us", { month: "long" });;
-
+    $scope.Wing = appSession.tenant.name;
     GetAllDetails();
-    Bind();
-    function BindData() {
-       
-        $scope.requests.push($scope.emp);
-       
+   // Bind();
 
-    }
+/* ************************  On Load data details Start **********************    */
+    function BindData() {
+            $scope.requests.push($scope.emp);
+       }
     function  Bind()
 
     {
-        for (var i = 0; i <8; i++) {
-            $scope.showEdit = false;
-            var index = 0;
-            if ($scope.requests.length != 0)
-                index = $scope.requests.length;
+        //for (var i = 0; i <8; i++) {
+        //    $scope.showEdit = false;
+        //    var index = 0;
+        //    if ($scope.requests.length != 0)
+        //        index = $scope.requests.length;
 
-            var emp = {
-                Index: index,
+        //    var emp = {
+        //        Index: index,
 
-                UserId: appSession.user.id,
-                TenantId: appSession.tenant.id
-            };
+        //        UserId: appSession.user.id,
+        //        TenantId: appSession.tenant.id
+        //    };
 
 
-            $scope.emp = emp;
+        //    $scope.emp = emp;
 
-            BindData();
-        }
+        //    BindData();
+        //}
     }
-
     function GetAllDetails()
     {
         GetParticulars();
@@ -49,47 +47,36 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
         var qs = $location.search();
         if (qs.id != null) {
             var getParticularData = requestAJService.getDetails(qs.id);
-
             getParticularData.success(function (particular) {
-                debugger;
+            var particularitems = {};
+                for (var i = 0; i < particular.length; i++) {
+                    particularitems.Item_id = particular[i].Item_id;
+                    particularitems.Unit_Id = particular[i].Unit_Id;
+                    particularitems.Quantity=particular[i].Quantity;
+                    particularitems.Rate=particular[i].Rate;
+                    particularitems.Vat=particular[i].Vat;
+                    particularitems.VateRate=particular[i].VateRate;
+                    particularitems.FinalRate=particular[i].FinalRate;
+                    particularitems.Cost = particular[i].Cost;
+                    $scope.requests.push(particularitems);
+                }
 
-
-                $scope.requests = particular;
             }, function () {
-                debugger;
-                alert('Error in getting particular records');
+                    alert('Error in getting particular records');
             });
         }
     }
-   
-  
-  function GetParticulars() {
-        debugger;
+    function GetParticulars() {
+     
         var getParticularData = requestAJService.getAllParticulars();
 
         getParticularData.success(function (particular) {
-            debugger;
+          
             $scope.particulars = particular;
         }, function () {
-            debugger;
+           
             alert('Error in getting particular records');
         });
-    }
-  $scope.SubmitRequestDiv = function ()
-    {
-            
-      $scope.showEdit = true;
-        var req = requestAJService.addRequest($scope.requests,appSession.tenant.id, appSession.user.id);
-        req.then(function (msg) {
-            $window.location.href = '#/test';
-            //request.showEdit = request.showEdit ? false : true;
-            //$scope.Result = "Request successfully submitted";
-        
-        }, function () {
-            alert('Error in updating emp record');
-        });
-      
-
     }
     function GetUnits() {
         var getUnits = requestAJService.getUnits();
@@ -101,25 +88,26 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
         });
     }
 
-    
+    /* ************************  On Load data details End **********************    */
 
-    
 
-    $scope.EditDetails = function () {
-        $scope.showEdit = false;
-        $scope.ParticularId = request.ParticularId;
-        $scope.UnitId = request.UnitId;
-        $scope.Rate = request.Rate;
-        $scope.Vat = request.Vat;
-        $scope.VateRate = request.VateRate;
-        $scope.FinalRate = request.FinalRate;
-        $scope.Quantity = request.Quantity;
-        $scope.Cost = request.Cost;
-        $scope.Action = "Update";
-        $scope.updateIndex = request.Id;
-        $scope.divAddRequest = true;
+    /* ************************  Event handler Start **********************    */
+    $scope.SubmitRequestDiv = function () {
+
+        $scope.showEdit = true;
+
+        var req = requestAJService.addRequest($scope.requests, appSession.tenant.id, appSession.user.id);
+        req.then(function (msg) {
+            $window.location.href = '#/test';
+
+        }, function () {
+            alert('Error in updating emp record');
+        });
+
+
     }
 
+   
     $scope.AddRequest = function () {
         $scope.showEdit =  false;
         var index = 0;
@@ -141,10 +129,11 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
             BindData();
 
     }
+
     $scope.GetRatedetails = function (request) {
 
-        if (request.ParticularDesc != null && request.UnitDesc != null) {
-            var req = requestAJService.getRateDetails(request.ParticularDesc, request.UnitDesc);
+        if (request.Item_id != null && request.Unit_Id != null) {
+            var req = requestAJService.getRateDetails(request.Item_id, request.Unit_Id);
             req.then(function (msg) {
                 if (msg.data.length != 0) {
                     request.Rate = msg.data[0].Rate;
@@ -182,7 +171,6 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
         $scope.requests = [];
       
     }
-
     
     $scope.FinalCost = function (request)
     {
@@ -190,22 +178,11 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
 
     }
 
-    function ClearFields() {
-        $scope.ParticularId = "";
-        $scope.UnitId ="";
-        $scope.Rate = "";
-        $scope.Vat = "";
-        $scope.VateRate = "";
-        $scope.FinalRate = "";
-        $scope.Quantity = "";
-        $scope.Cost = "";
-        GetParticulars();
-        GetUnits();
-    }
     $scope.Cancel = function () {
       
         
     };
+
     $scope.RemoveDetails = function (request) {
 
         for (var i = 0; i < $scope.requests.length; i++) {
@@ -221,8 +198,25 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
     $scope.toggleEdit = function (request) {
         request.showEdit = request.showEdit ? false : true;
     }
-});
 
+    /* ************************  Event handler End **********************    */
+
+
+
+    function ClearFields() {
+        $scope.ParticularId = "";
+        $scope.UnitId = "";
+        $scope.Rate = "";
+        $scope.Vat = "";
+        $scope.VateRate = "";
+        $scope.FinalRate = "";
+        $scope.Quantity = "";
+        $scope.Cost = "";
+        GetParticulars();
+        GetUnits();
+    }
+});
+/* ************************  Service API Start **********************    */
 app.service("requestAJService", function ($http, $q) {
     
     this.getAllParticulars = function () {
@@ -260,23 +254,14 @@ app.service("requestAJService", function ($http, $q) {
             method: "post",
             url: "RequestForm/GetRateDetails",
             params: {
-                particular: JSON.stringify(particulardesc),
-                unit: JSON.stringify(untidesc)
+                particular: particulardesc,
+                unit: untidesc
 
             }
         });
         return response;
     }
 
-    this.updateEmployee = function (emp) {
-        var response = $http({
-            method: "post",
-            url: "Employee/UpdateEmployee",
-            data: JSON.stringify(emp),
-            dataType: "json"
-        });
-        return response;
-    }
 
     this.addRequest = function (emp, tenant, user) {
         emp.tenant = tenant;
@@ -284,27 +269,21 @@ app.service("requestAJService", function ($http, $q) {
             method: "post",
             //url: "Employee/AddEmployee",
             url: "RequestForm/PostStationaryRequestDetails",
-            data: JSON.stringify(emp),
-          
-            dataType: "json"
-        });
+           data: JSON.stringify(emp),
+            //params: {
+            //    stRequest:1
+            //}
+            
+        }); 
         return response;
     }
 
-    this.deleteEmployee = function (employeeId) {
-        var response = $http({
-            method: "post",
-            url: "Employee/DeleteEmployee",
-            params: {
-                empId: JSON.stringify(employeeId)
-            }
-        });
-        return response;
-    }
+   
 
 
 });
 
+/* ************************  Service API  End**********************    */
 app.config(['$httpProvider', function ($httpProvider) {
     //initialize get if not there
     if (!$httpProvider.defaults.headers.get) {

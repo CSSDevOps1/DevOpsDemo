@@ -20,9 +20,9 @@ namespace SampleBoilerTemp.Web.App_Start
         {
             var values = from request in smsEntity.StationaryRequests
                          join st in smsEntity.Status on request.StatusId equals st.StatusId
-                         join user in smsEntity.AbpUsers on request.UserId equals user.Id where user.TenantId==tenantId && user.Id==userId
+                         join user in smsEntity.AbpUsers on request.UserId equals user.Id  where user.TenantId==tenantId && user.Id==userId
                          select new { request.RequestId, st.StatusDescription, user.UserName, request.CreatedDate };
-
+          
             return Json(values.ToList(), JsonRequestBehavior.AllowGet);
         }
 
@@ -42,19 +42,22 @@ namespace SampleBoilerTemp.Web.App_Start
         {
             var requestdetails = from req in smsEntity.StationaryRequestDetails join  part in smsEntity.SMS_Particulars on req.ParticularId equals part.Item_id join 
                                 unit in smsEntity.SMS_Units on req.UnitId equals unit.Unit_Id join reqst in smsEntity.StationaryRequests on req.RequestId equals reqst.RequestId  where req.RequestId == requestId 
-                                 select new {part.Item_Description,req.Quantity,req.Rate,req.Id,req.VateRate,req.FinalRate,req.Vat,unit.Unit_Description,req.Cost,reqst.TenantId,reqst.UserId,req.RequestId };
+                                 select new {part.Item_Description,req.Quantity,req.Rate,req.Id,req.VateRate,req.FinalRate,req.Vat,unit.Unit_Description,req.Cost,reqst.TenantId,reqst.UserId,req.RequestId,unit.Unit_Id,part.Item_id};
             return Json(requestdetails.ToList(), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetRateDetails(string particular,string unit)
+        public ActionResult GetRateDetails(int particular,int unit)
         {
-            particular = particular.Trim('"');
-            unit = unit.Trim('"');
-            var particularId = (from part in smsEntity.SMS_Particulars where part.Item_Description == particular select part.Item_id).FirstOrDefault();
-            var UnitId = (from units in smsEntity.SMS_Units where units.Unit_Description == unit select units.Unit_Id).FirstOrDefault();
+           
+           // var particularId = (from part in smsEntity.SMS_Particulars where part.Item_id ==Convert.ToInt32(particular) select part.Item_id).FirstOrDefault();
+           // var UnitId = (from units in smsEntity.SMS_Units where units.Unit_Id ==Convert.ToInt32(unit) select units.Unit_Id).FirstOrDefault();
 
-            var rate = from rates in smsEntity.SMS_Particular_Unit where rates.Item_id == particularId && rates.Unit_Id == UnitId select new { rates.VAT, rates.Rate };
+            var rate = from rates in smsEntity.SMS_Particular_Unit where rates.Item_id == particular && rates.Unit_Id == unit select new { rates.VAT, rates.Rate };
             
             return Json(rate.ToList(), JsonRequestBehavior.AllowGet);
+        }
+        public string PostStationaryRequestDetails1(int stRequest)
+        {
+            return "";
         }
         public string PostStationaryRequestDetails(List<Stationary_Request> stRequest)
         {
@@ -90,12 +93,12 @@ namespace SampleBoilerTemp.Web.App_Start
                 {
                     if (obj.ParticularDesc != null && obj.UnitDesc != null)
                     {
-                        var particularId = (from part in smsEntity.SMS_Particulars where part.Item_Description == obj.ParticularDesc select part.Item_id).FirstOrDefault();
-                        var UnitId = (from unit in smsEntity.SMS_Units where unit.Unit_Description == obj.UnitDesc select unit.Unit_Id).FirstOrDefault();
+                        //var particularId = (from part in smsEntity.SMS_Particulars where part.Item_Description == obj.ParticularDesc select part.Item_id).FirstOrDefault();
+                        //var UnitId = (from unit in smsEntity.SMS_Units where unit.Unit_Description == obj.UnitDesc select unit.Unit_Id).FirstOrDefault();
                         StationaryRequestDetail stationaryRequestDetail = new StationaryRequestDetail();
-                        stationaryRequestDetail.ParticularId = particularId;
+                        stationaryRequestDetail.ParticularId = obj.ParticularId;
                         stationaryRequestDetail.RequestId = reqIds;
-                        stationaryRequestDetail.UnitId = UnitId;
+                        stationaryRequestDetail.UnitId = obj.UnitId;
                         stationaryRequestDetail.Rate = obj.Rate;
                         stationaryRequestDetail.Vat = obj.Vat;
                         stationaryRequestDetail.VateRate = obj.VateRate;
