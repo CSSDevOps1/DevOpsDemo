@@ -31,6 +31,19 @@ namespace SampleBoilerTemp.Web.App_Start
             var values = from particular in smsEntity.SMS_Particulars select new { particular.Item_id,particular.Item_Description};
             return Json(values.ToList(), JsonRequestBehavior.AllowGet);
         }
+        public ActionResult DeleteDetailById(int id,int requestId)
+        {
+            var stationaryRequestDetail = from detail in smsEntity.StationaryRequestDetails
+                          where detail.RequestId == requestId && detail.Id==id
+                          select detail;
+
+            foreach (var details in stationaryRequestDetail)
+            {
+                details.Isactive = false;
+                smsEntity.SaveChanges();
+            }
+            return Json(stationaryRequestDetail, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult GetUnits()
         {
@@ -41,7 +54,7 @@ namespace SampleBoilerTemp.Web.App_Start
         public ActionResult EditRequest(int? requestId)
         {
             var requestdetails = from req in smsEntity.StationaryRequestDetails join  part in smsEntity.SMS_Particulars on req.ParticularId equals part.Item_id join 
-                                unit in smsEntity.SMS_Units on req.UnitId equals unit.Unit_Id join reqst in smsEntity.StationaryRequests on req.RequestId equals reqst.RequestId  where req.RequestId == requestId 
+                                unit in smsEntity.SMS_Units on req.UnitId equals unit.Unit_Id join reqst in smsEntity.StationaryRequests on req.RequestId equals reqst.RequestId  where req.RequestId == requestId && req.Isactive==true
                                  select new {part.Item_Description,req.Quantity,req.Rate,req.Id,req.VateRate,req.FinalRate,req.Vat,unit.Unit_Description,req.Cost,reqst.TenantId,reqst.UserId,req.RequestId,unit.Unit_Id,part.Item_id};
             return Json(requestdetails.ToList(), JsonRequestBehavior.AllowGet);
         }
@@ -59,7 +72,7 @@ namespace SampleBoilerTemp.Web.App_Start
         {
             return "";
         }
-        public string PostStationaryRequestDetails(int? requestId, List<Stationary_Request> stRequest, List<Stationary_Request> stRequest1)
+        public string PostStationaryRequestDetails(int? requestId, List<Stationary_Request> stRequest)
         {
 
            
@@ -106,11 +119,82 @@ namespace SampleBoilerTemp.Web.App_Start
                         stationaryRequestDetail.FinalRate = obj.FinalRate;
                         stationaryRequestDetail.Quantity = obj.Quantity;
                         stationaryRequestDetail.Cost = obj.Cost;
-                        smsEntity.StationaryRequestDetails.Add(stationaryRequestDetail);
+                        stationaryRequestDetail.Isactive = true;
+                       smsEntity.StationaryRequestDetails.Add(stationaryRequestDetail);
                         smsEntity.SaveChanges();
                     
 
                 }
+            }
+
+            else
+            {
+
+              
+               
+
+                foreach (Stationary_Request items in stRequest)
+                {
+                    if (items.Id.Contains('A'))
+                    {
+                        StationaryRequestDetail stationaryRequestDetail = new StationaryRequestDetail();
+                        stationaryRequestDetail.ParticularId = items.Item_id;
+                        stationaryRequestDetail.RequestId = requestId;
+                        stationaryRequestDetail.UnitId = items.Unit_Id;
+                        stationaryRequestDetail.Rate = items.Rate;
+                        stationaryRequestDetail.Vat = items.Vat;
+                        stationaryRequestDetail.VateRate = items.VateRate;
+                        stationaryRequestDetail.FinalRate = items.FinalRate;
+                        stationaryRequestDetail.Quantity = items.Quantity;
+                        stationaryRequestDetail.Cost = items.Cost;
+                        stationaryRequestDetail.Isactive = true;
+                        smsEntity.StationaryRequestDetails.Add(stationaryRequestDetail);
+                        smsEntity.SaveChanges();
+
+                    }
+                    else
+                    {
+                        long id = Convert.ToInt64(items.Id);
+                        var details = from detail in smsEntity.StationaryRequestDetails
+                                      where detail.RequestId == requestId
+                                      select detail;
+
+
+                        foreach (StationaryRequestDetail stationaryRequestDetail in details)
+                        {
+                            if (stationaryRequestDetail.Id == id)
+                            {
+
+                            stationaryRequestDetail.ParticularId = items.Item_id;
+                            stationaryRequestDetail.Id = id;
+                            stationaryRequestDetail.RequestId = requestId;
+                            stationaryRequestDetail.UnitId = items.Unit_Id;
+                            stationaryRequestDetail.Rate = items.Rate;
+                            stationaryRequestDetail.Vat = items.Vat;
+                            stationaryRequestDetail.VateRate = items.VateRate;
+                            stationaryRequestDetail.FinalRate = items.FinalRate;
+                            stationaryRequestDetail.Quantity = items.Quantity;
+                            stationaryRequestDetail.Cost = items.Cost;                                                           
+                            stationaryRequestDetail.Isactive = true;
+                            smsEntity.SaveChanges();
+                            }
+                          
+                           
+                        }
+                            
+                            
+                        
+                           
+                        
+
+                    }
+
+
+
+                }
+                
+
+
             }
 
 

@@ -24,6 +24,7 @@ namespace SampleBoilerTemp.Web.Models.DAO
         public Nullable<decimal> FinalRate { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> Cost { get; set; }
+        public Nullable<bool> Isactive { get; set; }
     
         public virtual SMS_Particulars SMS_Particulars { get; set; }
         public virtual SMS_Units SMS_Units { get; set; }

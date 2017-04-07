@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="DefaultModel.AbpLanguageText" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DefaultModel.AbpNotification" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DefaultModel.AbpNotificationSubscription" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DefaultModel.AbpOrganizationUnit" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.AbpOrganizationUnit" Width="1.875" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DefaultModel.AbpPermission" Width="1.5" PointX="5.25" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DefaultModel.AbpRole" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DefaultModel.AbpSetting" Width="1.5" PointX="3" PointY="16.875" IsExpanded="true" />
@@ -33,7 +33,7 @@
         <EntityTypeShape EntityType="DefaultModel.SMS_Particulars" Width="1.5" PointX="13.25" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DefaultModel.SMS_Units" Width="1.5" PointX="13.25" PointY="19" IsExpanded="true" />
         <EntityTypeShape EntityType="DefaultModel.StationaryRequest" Width="1.5" PointX="10.25" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="DefaultModel.StationaryRequestDetail" Width="1.5" PointX="15.5" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DefaultModel.StationaryRequestDetail" Width="2.75" PointX="15.5" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DefaultModel.Status" Width="1.5" PointX="8" PointY="11.75" IsExpanded="true" />
         <AssociationConnector Association="DefaultModel.FK_dbo_AbpFeatures_dbo_AbpEditions_EditionId" ManuallyRouted="false" />
         <AssociationConnector Association="DefaultModel.FK_dbo_AbpTenants_dbo_AbpEditions_EditionId" ManuallyRouted="false" />

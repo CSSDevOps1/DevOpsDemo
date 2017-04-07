@@ -430,6 +430,7 @@
           <Property Name="FinalRate" Type="money" />
           <Property Name="Quantity" Type="int" />
           <Property Name="Cost" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Isactive" Type="bit" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -1048,7 +1049,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" ConcurrencyMode="None" />
           <Property Name="TenantId" Type="Int32" />
           <Property Name="ParentId" Type="Int64" />
           <Property Name="Code" Type="String" MaxLength="95" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1359,7 +1360,7 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RequestId" Type="Int32" />
-          <Property Name="ParticularId" Type="Int16" />
+          <Property Name="ParticularId" Type="Int16" ConcurrencyMode="None" />
           <Property Name="UnitId" Type="Int16" />
           <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Vat" Type="Decimal" Precision="18" Scale="2" />
@@ -1370,6 +1371,7 @@
           <NavigationProperty Name="SMS_Particulars" Relationship="Self.FK_Particulars_Id" FromRole="StationaryRequestDetails" ToRole="SMS_Particulars" />
           <NavigationProperty Name="SMS_Units" Relationship="Self.FK_Unit_Id" FromRole="StationaryRequestDetails" ToRole="SMS_Units" />
           <NavigationProperty Name="StationaryRequest" Relationship="Self.FK_Request_DetailsId" FromRole="StationaryRequestDetails" ToRole="StationaryRequest" />
+          <Property Name="Isactive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -2288,6 +2290,7 @@
           <EntitySetMapping Name="StationaryRequestDetails">
             <EntityTypeMapping TypeName="DefaultModel.StationaryRequestDetail">
               <MappingFragment StoreEntitySet="StationaryRequestDetails">
+                <ScalarProperty Name="Isactive" ColumnName="Isactive" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="ParticularId" ColumnName="ParticularId" />

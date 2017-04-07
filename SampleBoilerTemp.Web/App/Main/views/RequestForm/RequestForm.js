@@ -48,8 +48,9 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
         if (qs.id != null) {
             var getParticularData = requestAJService.getDetails(qs.id);
             getParticularData.success(function (particular) {
-            var particularitems = {};
-            for (var i = 0; i < particular.length; i++) {
+            
+                for (var i = 0; i < particular.length; i++) {
+                    var particularitems = {};
                     particularitems.Id = particular[i].Id;
                     particularitems.Item_id = particular[i].Item_id;
                     particularitems.Unit_Id = particular[i].Unit_Id;
@@ -59,7 +60,7 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
                     particularitems.VateRate=particular[i].VateRate;
                     particularitems.FinalRate=particular[i].FinalRate;
                     particularitems.Cost = particular[i].Cost;
-                    particularitems.RequestId = particular[i].RequestId;
+                    //particularitems.RequestId = particular[i].RequestId;
                     particularitems.TenantId = particular[i].TenantId;
                     particularitems.UserId = particular[i].UserId;
                     $scope.requests.push(particularitems);
@@ -195,9 +196,23 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
     $scope.RemoveDetails = function (request) {
 
         for (var i = 0; i < $scope.requests.length; i++) {
-            if ($scope.requests[i].Index == request.Index) {
-              
+                    
+
+            if ($scope.requests[i].Id == request.Id) {
+                var isLocal = request.Id.toLocaleString();
+                if (isLocal.indexOf('A')) {
+                    
+                    var req = requestAJService.deleteDetailById(isLocal, qs.id);
+                    req.then(function (msg) {
+                        GetAllDetails();
+
+                    }, function () {
+                        alert('Error in deleting emp record');
+                    });
+                }
+                else {
                     $scope.requests.splice(i, 1);
+                }
              
             }
 
@@ -270,6 +285,18 @@ app.service("requestAJService", function ($http, $q) {
         });
         return response;
     }
+    this.deleteDetailById = function (id, qs) {
+        var response = $http({
+            method: "get",
+            url: "RequestForm/DeleteDetailById",
+            params: {
+                id: id,
+                requestId: qs
+              
+            }
+        });
+        return response;
+    }
 
 
     this.addRequest = function (emp, tenant, user,qs) {
@@ -279,7 +306,6 @@ app.service("requestAJService", function ($http, $q) {
             //url: "Employee/AddEmployee",
             url: "RequestForm/PostStationaryRequestDetails",
             data: JSON.stringify(emp),
-            data:JSON.stringify(emp),
             params: {
                
                 requestId: qs.id
