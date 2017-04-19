@@ -204,7 +204,6 @@ app.controller("app.views.RequestForm", function ($scope, $timeout, requestAJSer
                     
                     var req = requestAJService.deleteDetailById(isLocal, qs.id);
                     req.then(function (msg) {
-                        GetAllDetails();
 
                     }, function () {
                         alert('Error in deleting emp record');

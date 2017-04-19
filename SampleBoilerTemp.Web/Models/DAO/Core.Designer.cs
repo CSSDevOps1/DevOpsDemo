@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\MyWorkouts\SampleBoilerTemp\SampleBoilerTemp.Web\Models\DAO\Core.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\css105620\Source\Repos\Demo_CSS\SampleBoilerTemp.Web\Models\DAO\Core.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
