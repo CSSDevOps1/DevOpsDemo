@@ -3,7 +3,7 @@
   
   <parent>
   	<groupId>devops_platform</groupId>
-    <artifactId>devops_platform</artifactId>   
+    <artifactId>devops_platform-parent</artifactId>   
     <version>1.0-SNAPSHOT</version>    
   </parent>
   
